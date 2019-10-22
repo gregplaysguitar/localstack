@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import time
 import unittest
 from botocore.exceptions import ClientError
 from localstack.utils.aws import aws_stack
@@ -48,6 +49,7 @@ class SNSTest(unittest.TestCase):
         records = []
         local_port = get_free_tcp_port()
         proxy = start_proxy(local_port, backend_url=None, update_listener=MyUpdateListener())
+        time.sleep(0.5)
         queue_arn = 'http://localhost:%s' % local_port
         self.sns_client.subscribe(TopicArn=self.topic_arn, Protocol='http', Endpoint=queue_arn)
 
